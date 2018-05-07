@@ -7,8 +7,13 @@ uint8_t cont;
 String str = "What's up";
 
 void sendMSG(String buff) {
+  //Envio sin recivo
   PORTJ = PORTJ & B10011111;
-  PORTJ = PORTJ | B01000000; // habilitación de envío y recepción de msgs
+  PORTJ = PORTJ | B01100000;
+
+  //Envio y recibo
+  //PORTJ = PORTJ & B10011111;
+  //PORTJ = PORTJ | B01000000; // habilitación de envío y recepción de msgs
 
   Serial3.println(buff);
   //Serial.print(buff);
@@ -107,8 +112,8 @@ void setup() {
 }
 
 void loop() {
-  if (receive(msgRecibido))
-    Serial.print(msgRecibido);
+  //if (receive(msgRecibido))
+  //  Serial.print(msgRecibido);
 
 
   if (Serial.available())
@@ -116,23 +121,23 @@ void loop() {
     switch (Serial.read())
     {
       case '1':
-        //TestRS485(0);
+        Serial.println("Case 1");
         sendMSG("HOLA QUE TAL");
-        //Serial.println("Que esta pasando");
         break;
 
       case '2':
-        //TestRS485(1);
-        sendMSG("SEgunda opcion\n");
+        Serial.println("Case 2");
+        sendMSG(str);
         break;
 
       case '3':
-        //  TestRS485(2);
-        sendMSG("100010101010101011111100000JWEJEJEJEJEJEJEJJE\n");
+        Serial.println("Case 3");
+        sendMSG("state = 1;");
         break;
 
       default:
-        sendMSG("a la 4ª va la vencida");
+        Serial.println("Default");
+        sendMSG("Sending default");
         break;
 
 

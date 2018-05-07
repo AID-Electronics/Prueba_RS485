@@ -7,13 +7,20 @@ uint8_t cont;
 String str = "What's up";
 
 void sendMSG(String buff) {
+  PORTJ = PORTJ & B10011111;
+
   //Envio sin recivo
   PORTJ = PORTJ & B10011111;
   PORTJ = PORTJ | B01100000;
+  delay(5);
 
   //Envio y recibo
   //PORTJ = PORTJ & B10011111;
   //PORTJ = PORTJ | B01000000; // habilitación de envío y recepción de msgs
+
+  //Sin envio ni recibo
+  //PORTJ = PORTJ & B10011111;
+  //PORTJ = PORTJ | B00100000;
 
   Serial3.println(buff);
   //Serial.print(buff);
@@ -106,14 +113,16 @@ void setup() {
   /* Here we initialize RS485 serial at 9600 baudrate for communication */
   Serial3.begin(9600);
   /* This will initialize Controllino RS485 pins */
-  Controllino_RS485Init();
-  //RecieveRS485();
 
+  //Controllino_RS485Init();  //Same as
+  pinMode(CONTROLLINO_RS485_TX, OUTPUT);
+  pinMode(CONTROLLINO_RS485_RX, INPUT);
+  PORTJ &= B10011111;
 }
 
 void loop() {
-  //if (receive(msgRecibido))
-  //  Serial.print(msgRecibido);
+  if (receive(msgRecibido))
+    Serial.print(msgRecibido);
 
 
   if (Serial.available())

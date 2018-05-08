@@ -24,9 +24,6 @@ void sendMSG(String buff) {
 
   Serial3.println(buff);
   //Serial.print(buff);
-
-  Serial.flush();
-  Serial3.flush();
 }
 
 bool receive(char buff[]) {
@@ -47,8 +44,6 @@ bool receive(char buff[]) {
 
   }
   buff[i] = '\0';
-  Serial.flush();
-  Serial3.flush();
   return flag;
 
 }
@@ -114,9 +109,9 @@ void RecieveRS485() {
 
 void setup() {
   /* Here we initialize USB serial at 9600 baudrate for reporting */
-  Serial.begin(115200);
+  Serial.begin(9600);
   /* Here we initialize RS485 serial at 9600 baudrate for communication */
-  Serial3.begin(115200);
+  Serial3.begin(9600);
   /* This will initialize Controllino RS485 pins */
 
   //Controllino_RS485Init();  //Same as

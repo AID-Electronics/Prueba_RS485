@@ -54,7 +54,7 @@ void RecieveRS485() {
   }
 }
 
-<<<<<<< HEAD
+
 
 
 void mandarEstado_desdeSerial()
@@ -84,7 +84,6 @@ void mandarEstado_desdeSerial()
     }
   }
 }
-=======
 void setupPinesMega(){
   pinMode(pinEstado, INPUT);
   pinMode(pinMotor, OUTPUT);
@@ -108,7 +107,7 @@ void loopMega(){
   }
 }
 
->>>>>>> f7a8eff5a6ce3433312b216114d4432b5d0da7f1
+
 void setup() {
   Serial.begin(1000000);
   Serial3.begin(115200);
@@ -129,7 +128,7 @@ void setup() {
 }
 
 void loop() {
-<<<<<<< HEAD
+
   if (receive(msgRecibido))
     Serial.print(msgRecibido);
 
@@ -162,10 +161,9 @@ void loop() {
 
     }
   }*/
-}
-=======
-  loopMega();
+
+  //loopMega();
 }
 
 
->>>>>>> f7a8eff5a6ce3433312b216114d4432b5d0da7f1
+

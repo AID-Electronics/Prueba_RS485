@@ -7,12 +7,12 @@ uint8_t cont;
 String str = "What's up";
 
 void sendMSG(String buff) {
-  PORTJ = PORTJ & B10011111;
+  //PORTJ = PORTJ & B10011111;
 
   //Envio sin recivo
-  PORTJ = PORTJ & B10011111;
-  PORTJ = PORTJ | B01100000;
-  delay(5);
+  //PORTJ = PORTJ & B10011111;
+  //PORTJ = PORTJ | B01100000;
+  //delay(5);
 
   //Envio y recibo
   //PORTJ = PORTJ & B10011111;
@@ -27,7 +27,7 @@ void sendMSG(String buff) {
 }
 
 bool receive(char buff[]) {
-  PORTJ = PORTJ & B10011111; // Ponemos nuestro puerto RS485 en modo lectura.
+ // PORTJ = PORTJ & B10011111; // Ponemos nuestro puerto RS485 en modo lectura.
 
   bool flag = false;
   int i = 0;
@@ -103,6 +103,7 @@ void RecieveRS485() {
     {
       // print the new byte:
       Serial.print((char)Serial3.read());
+      
     }
   }
 }
@@ -114,10 +115,14 @@ void setup() {
   Serial3.begin(9600);
   /* This will initialize Controllino RS485 pins */
 
-  //Controllino_RS485Init();  //Same as
-  pinMode(CONTROLLINO_RS485_TX, OUTPUT);
-  pinMode(CONTROLLINO_RS485_RX, INPUT);
-  PORTJ &= B10011111;
+  Controllino_RS485Init();  //Same as
+  //pinMode(CONTROLLINO_RS485_TX, OUTPUT);
+  //pinMode(CONTROLLINO_RS485_RX, INPUT);
+  //PORTJ &= B10011111;
+
+  PORTJ = PORTJ & B10011111;
+  PORTJ = PORTJ | B01000000;
+  
 }
 
 void loop() {

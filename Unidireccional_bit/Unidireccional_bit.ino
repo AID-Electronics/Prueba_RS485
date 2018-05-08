@@ -1,7 +1,10 @@
 #include <SPI.h>
 #include <Controllino.h> /* Usage of CONTROLLINO library allows you to use CONTROLLINO_xx aliases in your sketch. */
 
-#define pinEstado 2
+#define pinEstado A0
+#define pinMotor 2
+
+bool estado;
 
 char msgRecibido[10];
 uint8_t cont;
@@ -51,6 +54,29 @@ void RecieveRS485() {
   }
 }
 
+void setupPinesMega(){
+  pinMode(pinEstado, INPUT);
+  pinMode(pinMotor, OUTPUT);
+}
+
+void loopMega(){
+  estado = digitalRead(pinEstado);
+  Serial.print(estado);
+  Serial.print(" - ");
+  if (estado == false) {
+    digitalWrite(pinMotor,LOW);
+    Serial.println("Esperando");
+    delay(500);
+  }
+
+  else {
+    digitalWrite(pinMotor,HIGH);
+    String out;
+    out += millis()/1000;
+    sendMSG(out);
+  }
+}
+
 void setup() {
   Serial.begin(1000000);
   Serial3.begin(115200);
@@ -60,45 +86,16 @@ void setup() {
   //  pinMode(CONTROLLINO_RS485_TX, INPUT);
   //  pinMode(CONTROLLINO_RS485_RX, INPUT);
   //  PORTJ &= B10011111;
-//
-//  DDRJ = DDRJ | B01100010;
-//
-//  PORTJ = PORTJ & B10011111;
-//  PORTJ = PORTJ | B01000000;
-
+  //
+  //  DDRJ = DDRJ | B01100010;
+  //
+  //  PORTJ = PORTJ & B10011111;
+  //  PORTJ = PORTJ | B01000000;
+  setupPinesMega();
 }
 
 void loop() {
-  if (receive(msgRecibido))
-    Serial.print(msgRecibido);
-
-
-  if (Serial.available())
-  {
-    switch (Serial.read())
-    {
-      case '1':
-        Serial.println("Case 1");
-        sendMSG("HOLA QUE TAL");
-        break;
-
-      case '2':
-        Serial.println("Case 2");
-        sendMSG(str);
-        break;
-
-      case '3':
-        Serial.println("Case 3");
-        sendMSG("state = 1;");
-        break;
-
-      default:
-        Serial.println("Default");
-        sendMSG("Sending default");
-        break;
-
-
-
-    }
-  }
+  loopMega();
 }
+
+

@@ -51,12 +51,43 @@ void RecieveRS485() {
   }
 }
 
+
+
+void mandarEstado_desdeSerial()
+{
+   if (Serial.available())
+  {
+    switch (Serial.read())
+    {
+      case '1':
+        Serial.println("HIGH");
+        digitalWrite(pinEstado,HIGH);
+        break;
+
+      case '2':
+        Serial.println("LOW");
+        digitalWrite(pinEstado,LOW);
+        break;
+
+
+      default:
+        Serial.println("Default");
+        
+        break;
+
+
+
+    }
+  }
+}
 void setup() {
   Serial.begin(1000000);
   Serial3.begin(115200);
 
   /* This will initialize Controllino RS485 pins */
   Controllino_RS485Init();  //Same as
+  pinMode(pinEstado,OUTPUT);
+  
   //  pinMode(CONTROLLINO_RS485_TX, INPUT);
   //  pinMode(CONTROLLINO_RS485_RX, INPUT);
   //  PORTJ &= B10011111;
@@ -72,8 +103,8 @@ void loop() {
   if (receive(msgRecibido))
     Serial.print(msgRecibido);
 
-
-  if (Serial.available())
+  mandarEstado_desdeSerial();
+ /* if (Serial.available())
   {
     switch (Serial.read())
     {
@@ -100,5 +131,5 @@ void loop() {
 
 
     }
-  }
+  }*/
 }

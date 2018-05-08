@@ -119,7 +119,7 @@ void setup() {
   //  pinMode(CONTROLLINO_RS485_RX, INPUT);
   //  PORTJ &= B10011111;
 
-  DDRJ = DDRJ | B01100000;
+  DDRJ = DDRJ | B01100010;
 
   
   PORTJ = PORTJ & B10011111;

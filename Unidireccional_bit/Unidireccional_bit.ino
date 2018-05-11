@@ -4,6 +4,7 @@
 #define pinEstado A0
 #define pinMotor 2
 
+
 bool estado;
 
 char msgRecibido[10];
@@ -65,14 +66,18 @@ void mandarEstado_desdeSerial()
     {
       case '1':
         Serial.println("HIGH");
-        digitalWrite(pinEstado,HIGH);
+        digitalWrite(pinMotor,HIGH);
         break;
 
       case '2':
         Serial.println("LOW");
-        digitalWrite(pinEstado,LOW);
+        digitalWrite(pinMotor,LOW);
         break;
 
+      case '3':
+        Serial.println("MED");
+        analogWrite(pinMotor,30);
+        break;
 
       default:
         Serial.println("Default");
@@ -114,7 +119,7 @@ void setup() {
 
   /* This will initialize Controllino RS485 pins */
   Controllino_RS485Init();  //Same as
-  pinMode(pinEstado,OUTPUT);
+  //pinMode(pinMotor,OUTPUT);
   
   //  pinMode(CONTROLLINO_RS485_TX, INPUT);
   //  pinMode(CONTROLLINO_RS485_RX, INPUT);
